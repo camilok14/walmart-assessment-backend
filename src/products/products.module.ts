@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
-import { Product, ProductSchema } from './schemas/product.shcema';
+import { Product, ProductSchema } from './schemas/product.schema';
 
 const productModel: ModelDefinition = {
   name: Product.name,
