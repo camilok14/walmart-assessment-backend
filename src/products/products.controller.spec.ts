@@ -15,7 +15,7 @@ describe('ProductsController', () => {
     expect(controller).toBeDefined();
   });
   it('should find products using search string from query', async () => {
-    productsServiceMock.findProductsBySearchString = jest.fn();
+    productsServiceMock.findProductsBySearchString = jest.fn(async () => 'products');
     const query = { search: 'searchString' };
     const result = await controller.findProducts(query);
     expect(result).toBe('producst');
