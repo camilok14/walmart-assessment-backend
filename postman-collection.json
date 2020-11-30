@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "cd71070f-4a7d-4df3-8320-195634274da1",
+		"name": "walmart-assessment-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Bad request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bebe2542-c5d9-4dfd-b2e9-11a3e2b7b9ac",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"pm.test(\"Bad request message\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"Search strings shorter than 3 characters must be valid product id\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/products?searchString=a",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "searchString",
+							"value": "a"
+						}
+					]
+				},
+				"description": "If search string is shorter than 3 chars and not a product id, API should send Bad Request error"
+			},
+			"response": []
+		},
+		{
+			"name": "Search for \"wax\"",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "04cabb08-526f-441c-83ca-b9e0a1b0b6a9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Array with products\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(14);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/products?searchString=wax",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "searchString",
+							"value": "wax"
+						}
+					]
+				},
+				"description": "Should get products matching search string"
+			},
+			"response": []
+		},
+		{
+			"name": "Healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "279113c8-35b4-40ae-a24f-9535efa8ced1",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Healthcheck message\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"walmart-assessment-backend is up and running\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/health",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
