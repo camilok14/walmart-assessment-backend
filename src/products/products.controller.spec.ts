@@ -16,9 +16,9 @@ describe('ProductsController', () => {
   });
   it('should find products using search string from query', async () => {
     productsServiceMock.findProductsBySearchString = jest.fn(async () => 'products');
-    const query = { search: 'searchString' };
+    const query = { searchString: 'searchString' };
     const result = await controller.findProducts(query);
-    expect(result).toBe('producst');
-    expect(productsServiceMock.findProductsBySearchString).toHaveBeenCalledWith(query.search);
+    expect(result).toBe('products');
+    expect(productsServiceMock.findProductsBySearchString).toHaveBeenCalledWith(query.searchString);
   });
 });
