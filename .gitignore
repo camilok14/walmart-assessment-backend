@@ -36,3 +36,4 @@ lerna-debug.log*
 package-lock.json
 # stryker temp files
 .stryker-tmp
+/reports
