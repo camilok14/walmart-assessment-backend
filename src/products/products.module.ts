@@ -7,7 +7,7 @@ import { ProductsService } from './products.service';
 const productModel: ModelDefinition = {
   name: Product.name,
   schema: ProductSchema,
-  collection: 'products'
+  collection: process.env.MONGODB_PRODUCTS_COLLECTION_NAME
 };
 const productMongooseModule = MongooseModule.forFeature([productModel]);
 @Module({
