@@ -18,12 +18,11 @@ describe('ProductsService', () => {
   });
   it('should perform query against database using product id', async () => {
     productModelMock.find = jest.fn(async () => 'products');
-    const searchString = '1234';
+    const searchString = '12';
     const result = await service.findProductsBySearchString(searchString);
     expect(result).toBe('products');
-    const $regex = `.*${searchString}.*`;
     expect(productModelMock.find).toHaveBeenCalledWith({
-      $or: [{ id: 1234 }, { description: { $regex } }, { brand: { $regex } }]
+      $or: [{ id: 12 }]
     });
   });
   it('should perform query against database using search string', async () => {
