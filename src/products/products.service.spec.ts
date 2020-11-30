@@ -27,7 +27,7 @@ describe('ProductsService', () => {
   });
   it('should perform query against database using search string', async () => {
     productModelMock.find = jest.fn(async () => 'products');
-    const searchString = 'searchString';
+    const searchString = 'bla';
     const result = await service.findProductsBySearchString(searchString);
     expect(result).toBe('products');
     const $regex = `.*${searchString}.*`;
