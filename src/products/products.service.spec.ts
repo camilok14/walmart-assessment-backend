@@ -14,7 +14,7 @@ describe('ProductsService', () => {
     expect(service).toBeDefined();
   });
   it('should throw bad request error if id is not valid', async () => {
-    await expect(service.findProductsBySearchString('la')).rejects.toThrow('Search strings shorter than 3 characters must ve valid product id');
+    await expect(service.findProductsBySearchString('la')).rejects.toThrow('Search strings shorter than 3 characters must be valid product id');
   });
   it('should perform query against database using product id', async () => {
     productModelMock.find = jest.fn(async () => 'products');
