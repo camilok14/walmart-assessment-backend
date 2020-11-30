@@ -19,6 +19,5 @@ export class Product {
   price: number;
 }
 
-export interface ProductDocument extends Product, Document {}
-
+export type ProductDocument = Product & Document;
 export const ProductSchema = SchemaFactory.createForClass(Product);
