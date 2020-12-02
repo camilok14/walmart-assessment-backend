@@ -16,23 +16,41 @@ describe('ProductsService', () => {
   it('should throw bad request error if id is not valid', async () => {
     await expect(service.findProductsBySearchString('la')).rejects.toThrow('Search strings shorter than 3 characters must be valid product id');
   });
-  it('should perform query against database using product id', async () => {
-    productModelMock.find = jest.fn(async () => 'products');
+  it('should perform query against database using non palindrome product id', async () => {
+    productModelMock.aggregate = jest.fn(async () => 'products');
     const searchString = '12';
     const result = await service.findProductsBySearchString(searchString);
     expect(result).toBe('products');
-    expect(productModelMock.find).toHaveBeenCalledWith({
-      $or: [{ id: 12 }]
-    });
+    expect(productModelMock.aggregate).toHaveBeenCalledWith([
+      {
+        $match: {
+          $or: [{ id: 12 }]
+        }
+      }
+    ]);
   });
-  it('should perform query against database using search string', async () => {
-    productModelMock.find = jest.fn(async () => 'products');
-    const searchString = 'bla';
+  it('should perform query against database using palindrome search string', async () => {
+    productModelMock.aggregate = jest.fn(async () => 'products');
+    const searchString = 'aba';
     const result = await service.findProductsBySearchString(searchString);
     expect(result).toBe('products');
     const $regex = `.*${searchString}.*`;
-    expect(productModelMock.find).toHaveBeenCalledWith({
-      $or: [{ description: { $regex } }, { brand: { $regex } }]
-    });
+    expect(productModelMock.aggregate).toHaveBeenCalledWith([
+      {
+        $match: {
+          $or: [{ description: { $regex } }, { brand: { $regex } }]
+        }
+      },
+      {
+        $set: {
+          priceWithDiscount: { $divide: ['$price', 2] }
+        }
+      },
+      {
+        $set: {
+          priceWithDiscount: { $round: ['$priceWithDiscount', 0] }
+        }
+      }
+    ]);
   });
 });

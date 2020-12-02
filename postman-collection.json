@@ -126,6 +126,48 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Palindrome product id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "23c1ab34-92f2-44bc-9725-a318ad9db597",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Should get product with discounted price\", function () {",
+							"    var [product] = pm.response.json();",
+							"    pm.expect(product.priceWithDiscount).to.eql(35702);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/products?searchString=212",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "searchString",
+							"value": "212"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
